@@ -15,7 +15,7 @@ const migrationClient = postgres(dbUrl, {
 
 export const migrationDb = drizzle(migrationClient);
 
-export const queryClient = postgres(dbUrl, { 
+const queryClient = postgres(dbUrl, { 
     ssl: {
         rejectUnauthorized: false,
     },
