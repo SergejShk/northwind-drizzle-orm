@@ -13,6 +13,6 @@ const suppliers = pgTable('suppliers', {
     Phone: text('Phone'),
     Fax: text('Fax'),
     HomePage: text('HomePage'),
-  });
+});
 
 export default suppliers

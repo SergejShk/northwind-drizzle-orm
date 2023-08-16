@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "3965e791-b53b-47c1-b4d0-2b3435f60759",
+  "id": "a3cbb13e-4bf5-4f0d-843c-c718cc57ec9e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "categories": {
@@ -112,21 +112,54 @@
       "name": "emplyee_territories",
       "schema": "",
       "columns": {
-        "EmployeeID": {
-          "name": "EmployeeID",
-          "type": "text",
+        "ID": {
+          "name": "ID",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "CompanyName": {
-          "name": "CompanyName",
+        "EmployeeID": {
+          "name": "EmployeeID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TerritoryID": {
+          "name": "TerritoryID",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "emplyee_territories_EmployeeID_employees_EmployeeID_fk": {
+          "name": "emplyee_territories_EmployeeID_employees_EmployeeID_fk",
+          "tableFrom": "emplyee_territories",
+          "tableTo": "employees",
+          "columnsFrom": [
+            "EmployeeID"
+          ],
+          "columnsTo": [
+            "EmployeeID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "emplyee_territories_TerritoryID_territories_TerritoryID_fk": {
+          "name": "emplyee_territories_TerritoryID_territories_TerritoryID_fk",
+          "tableFrom": "emplyee_territories",
+          "tableTo": "territories",
+          "columnsFrom": [
+            "TerritoryID"
+          ],
+          "columnsTo": [
+            "TerritoryID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -240,11 +273,17 @@
       "name": "order_details",
       "schema": "",
       "columns": {
+        "ID": {
+          "name": "ID",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
         "OrderID": {
           "name": "OrderID",
           "type": "text",
-          "primaryKey": true,
-          "notNull": true
+          "primaryKey": false,
+          "notNull": false
         },
         "ProductID": {
           "name": "ProductID",
@@ -272,7 +311,34 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "order_details_OrderID_orders_OrderID_fk": {
+          "name": "order_details_OrderID_orders_OrderID_fk",
+          "tableFrom": "order_details",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "OrderID"
+          ],
+          "columnsTo": [
+            "OrderID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "order_details_ProductID_products_ProductID_fk": {
+          "name": "order_details_ProductID_products_ProductID_fk",
+          "tableFrom": "order_details",
+          "tableTo": "products",
+          "columnsFrom": [
+            "ProductID"
+          ],
+          "columnsTo": [
+            "ProductID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -366,7 +432,34 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "orders_CustomerID_customers_CustomerID_fk": {
+          "name": "orders_CustomerID_customers_CustomerID_fk",
+          "tableFrom": "orders",
+          "tableTo": "customers",
+          "columnsFrom": [
+            "CustomerID"
+          ],
+          "columnsTo": [
+            "CustomerID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "orders_EmployeeID_employees_EmployeeID_fk": {
+          "name": "orders_EmployeeID_employees_EmployeeID_fk",
+          "tableFrom": "orders",
+          "tableTo": "employees",
+          "columnsFrom": [
+            "EmployeeID"
+          ],
+          "columnsTo": [
+            "EmployeeID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -430,7 +523,34 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "products_SupplierID_suppliers_SupplierID_fk": {
+          "name": "products_SupplierID_suppliers_SupplierID_fk",
+          "tableFrom": "products",
+          "tableTo": "suppliers",
+          "columnsFrom": [
+            "SupplierID"
+          ],
+          "columnsTo": [
+            "SupplierID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "products_CategoryID_categories_CategoryID_fk": {
+          "name": "products_CategoryID_categories_CategoryID_fk",
+          "tableFrom": "products",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "CategoryID"
+          ],
+          "columnsTo": [
+            "CategoryID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -590,35 +710,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "test": {
-      "name": "test",
-      "schema": "",
-      "columns": {
-        "TestID": {
-          "name": "TestID",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "firstName": {
-          "name": "firstName",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "lastName": {
-          "name": "lastName",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
+      "foreignKeys": {
+        "territories_RegionID_regions_RegionID_fk": {
+          "name": "territories_RegionID_regions_RegionID_fk",
+          "tableFrom": "territories",
+          "tableTo": "regions",
+          "columnsFrom": [
+            "RegionID"
+          ],
+          "columnsTo": [
+            "RegionID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
-      "indexes": {},
-      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

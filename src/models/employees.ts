@@ -17,6 +17,6 @@ const employees = pgTable('employees', {
     Extension: text('Extension'),
     Notes: text('Notes'),
     ReportsTo: text('ReportsTo'),
-  });
+});
 
 export default employees

@@ -1,4 +1,7 @@
 import { pgTable, text } from "drizzle-orm/pg-core";
+import { relations } from 'drizzle-orm';
+
+import orders from "./orders";
 
 const customers = pgTable('customers', {
     CustomerID: text('CustomerID').primaryKey(),
@@ -12,6 +15,10 @@ const customers = pgTable('customers', {
     Country: text('Country'),
     Phone: text('Phone'),
     Fax: text('Fax'),
-  });
+});
+
+export const categoriesRelations = relations(customers, ({ many }) => ({
+	orders: many(orders),
+}));
 
 export default customers
