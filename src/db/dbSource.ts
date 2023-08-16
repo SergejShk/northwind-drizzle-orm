@@ -6,8 +6,18 @@ dotenv.config();
 
 const dbUrl = process.env.DB_URL || ''
 
-const migrationClient = postgres(dbUrl, { max: 1 });
+const migrationClient = postgres(dbUrl, { 
+    max: 1,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
+
 export const migrationDb = drizzle(migrationClient);
 
-const queryClient = postgres(dbUrl);
+const queryClient = postgres(dbUrl, { 
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
 export const db = drizzle(queryClient);
