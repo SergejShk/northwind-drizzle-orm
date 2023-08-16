@@ -1,16 +1,44 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "54686116-d9f4-4cfa-a805-b36b0dceee66",
+  "id": "3965e791-b53b-47c1-b4d0-2b3435f60759",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
+    "categories": {
+      "name": "categories",
+      "schema": "",
+      "columns": {
+        "CategoryID": {
+          "name": "CategoryID",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "CategoryName": {
+          "name": "CategoryName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Description": {
+          "name": "Description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "customers": {
       "name": "customers",
       "schema": "",
       "columns": {
         "CustomerID": {
           "name": "CustomerID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -86,7 +114,7 @@
       "columns": {
         "EmployeeID": {
           "name": "EmployeeID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -108,7 +136,7 @@
       "columns": {
         "EmployeeID": {
           "name": "EmployeeID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -214,7 +242,7 @@
       "columns": {
         "OrderID": {
           "name": "OrderID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -254,7 +282,7 @@
       "columns": {
         "OrderID": {
           "name": "OrderID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -342,13 +370,13 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "prodacts": {
-      "name": "prodacts",
+    "products": {
+      "name": "products",
       "schema": "",
       "columns": {
         "ProductID": {
           "name": "ProductID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -412,7 +440,7 @@
       "columns": {
         "RegionID": {
           "name": "RegionID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -434,7 +462,7 @@
       "columns": {
         "ShipperID": {
           "name": "ShipperID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -462,7 +490,7 @@
       "columns": {
         "SupplierID": {
           "name": "SupplierID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -544,7 +572,7 @@
       "columns": {
         "TerritoryID": {
           "name": "TerritoryID",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -556,6 +584,34 @@
         },
         "RegionID": {
           "name": "RegionID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "test": {
+      "name": "test",
+      "schema": "",
+      "columns": {
+        "TestID": {
+          "name": "TestID",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "firstName": {
+          "name": "firstName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastName": {
+          "name": "lastName",
           "type": "text",
           "primaryKey": false,
           "notNull": false

@@ -1,7 +1,7 @@
-import { pgTable, serial, text } from "drizzle-orm/pg-core";
+import { pgTable, text } from "drizzle-orm/pg-core";
 
 const suppliers = pgTable('suppliers', {
-    SupplierID: serial('SupplierID').primaryKey(),
+    SupplierID: text('SupplierID').primaryKey(),
     CompanyName: text('CompanyName'),
     ContactName: text('ContactName'),
     ContactTitle: text('ContactTitle'),

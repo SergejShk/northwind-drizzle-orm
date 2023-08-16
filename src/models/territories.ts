@@ -1,7 +1,7 @@
-import { pgTable, serial, text } from "drizzle-orm/pg-core";
+import { pgTable, text } from "drizzle-orm/pg-core";
 
 const territories = pgTable('territories', {
-    TerritoryID: serial('TerritoryID').primaryKey(),
+    TerritoryID: text('TerritoryID').primaryKey(),
     TerritoryDescription: text('TerritoryDescription'),
     RegionID: text('RegionID'),
   });

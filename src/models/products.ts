@@ -1,7 +1,7 @@
-import { pgTable, serial, text } from "drizzle-orm/pg-core";
+import { pgTable, text } from "drizzle-orm/pg-core";
 
-const prodacts = pgTable('prodacts', {
-    ProductID: serial('ProductID').primaryKey(),
+const products = pgTable('products', {
+    ProductID: text('ProductID').primaryKey(),
     ProductName: text('ProductName'),
     SupplierID: text('SupplierID'),
     CategoryID: text('CategoryID'),
@@ -12,4 +12,4 @@ const prodacts = pgTable('prodacts', {
     Discontinued: text('Discontinued'),
   });
 
-export default prodacts
+export default products

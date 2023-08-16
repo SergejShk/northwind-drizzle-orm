@@ -1,5 +1,11 @@
+CREATE TABLE IF NOT EXISTS "categories" (
+	"CategoryID" text PRIMARY KEY NOT NULL,
+	"CategoryName" text,
+	"Description" text
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "customers" (
-	"CustomerID" serial PRIMARY KEY NOT NULL,
+	"CustomerID" text PRIMARY KEY NOT NULL,
 	"CompanyName" text,
 	"ContactName" text,
 	"ContactTitle" text,
@@ -13,12 +19,12 @@ CREATE TABLE IF NOT EXISTS "customers" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "emplyee_territories" (
-	"EmployeeID" serial PRIMARY KEY NOT NULL,
+	"EmployeeID" text PRIMARY KEY NOT NULL,
 	"CompanyName" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "employees" (
-	"EmployeeID" serial PRIMARY KEY NOT NULL,
+	"EmployeeID" text PRIMARY KEY NOT NULL,
 	"LastName" text,
 	"FirstName" text,
 	"Title" text,
@@ -37,7 +43,7 @@ CREATE TABLE IF NOT EXISTS "employees" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "order_details" (
-	"OrderID" serial PRIMARY KEY NOT NULL,
+	"OrderID" text PRIMARY KEY NOT NULL,
 	"ProductID" text,
 	"UnitPrice" text,
 	"Quantity" text,
@@ -45,7 +51,7 @@ CREATE TABLE IF NOT EXISTS "order_details" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "orders" (
-	"OrderID" serial PRIMARY KEY NOT NULL,
+	"OrderID" text PRIMARY KEY NOT NULL,
 	"CustomerID" text,
 	"EmployeeID" text,
 	"OrderDate" text,
@@ -61,8 +67,8 @@ CREATE TABLE IF NOT EXISTS "orders" (
 	"ShipCountry" text
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "prodacts" (
-	"ProductID" serial PRIMARY KEY NOT NULL,
+CREATE TABLE IF NOT EXISTS "products" (
+	"ProductID" text PRIMARY KEY NOT NULL,
 	"ProductName" text,
 	"SupplierID" text,
 	"CategoryID" text,
@@ -74,18 +80,18 @@ CREATE TABLE IF NOT EXISTS "prodacts" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "regions" (
-	"RegionID" serial PRIMARY KEY NOT NULL,
+	"RegionID" text PRIMARY KEY NOT NULL,
 	"RegionDescription" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "shippers" (
-	"ShipperID" serial PRIMARY KEY NOT NULL,
+	"ShipperID" text PRIMARY KEY NOT NULL,
 	"CompanyName" text,
 	"Phone" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "suppliers" (
-	"SupplierID" serial PRIMARY KEY NOT NULL,
+	"SupplierID" text PRIMARY KEY NOT NULL,
 	"CompanyName" text,
 	"ContactName" text,
 	"ContactTitle" text,
@@ -100,7 +106,13 @@ CREATE TABLE IF NOT EXISTS "suppliers" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "territories" (
-	"TerritoryID" serial PRIMARY KEY NOT NULL,
+	"TerritoryID" text PRIMARY KEY NOT NULL,
 	"TerritoryDescription" text,
 	"RegionID" text
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "test" (
+	"TestID" text PRIMARY KEY NOT NULL,
+	"firstName" text,
+	"lastName" text
 );
