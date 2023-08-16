@@ -1,4 +1,5 @@
 import { pgTable, text } from "drizzle-orm/pg-core";
+
 import regions from "./regions";
 
 const territories = pgTable('territories', {

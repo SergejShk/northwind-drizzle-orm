@@ -2,8 +2,8 @@ import "reflect-metadata";
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import dotenv from "dotenv";
 
-import { app } from "app";
-import { migrationDb } from "db/dbSource";
+import { app } from "./app";
+import { migrationDb } from "./db/dbSource";
  
 dotenv.config();
 

@@ -1,6 +1,6 @@
 import { pgTable, serial, text } from "drizzle-orm/pg-core";
-import employees from "./employees";
 
+import employees from "./employees";
 import territories from "./territories";
 
 const employeeTerritories = pgTable('emplyee_territories', {
