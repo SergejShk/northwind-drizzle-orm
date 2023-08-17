@@ -1,5 +1,5 @@
 import { pgTable, text } from "drizzle-orm/pg-core";
-import { relations } from 'drizzle-orm';
+import { relations, InferModel } from 'drizzle-orm';
 
 import orders from "./orders";
 
@@ -20,5 +20,7 @@ const customers = pgTable('customers', {
 export const categoriesRelations = relations(customers, ({ many }) => ({
 	orders: many(orders),
 }));
+
+export type CustomersSelectType = InferModel<typeof customers, "select">;
 
 export default customers

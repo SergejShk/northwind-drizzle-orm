@@ -3,6 +3,7 @@ import logger from "morgan";
 import cors from "cors";
 
 import suppliers from "./controllers/suppliers";
+import customers from "./controllers/customers";
 
 import { errorHandler } from "./utils/errorHandlers";
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(suppliers.path, suppliers.router);
+app.use(customers.path, customers.router);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Not Found" });
