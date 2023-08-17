@@ -10,7 +10,7 @@ export const getAllCustomers = async (skip: number, take: number) => {
     const start = process.hrtime();
   
     const data: CustomersSelectType[] = await db.select().from(customers).limit(take).offset(skip);
-    const sqlQuery = db.select().from(customers).limit(take).offset(skip).toSQL();
+    const { sql: sqlQuery } = db.select().from(customers).limit(take).offset(skip).toSQL();
     const total = await db.select({ count: sql<number>`count(*)` }).from(customers);
   
     const end = process.hrtime(start);
@@ -32,7 +32,7 @@ export const getAllCustomers = async (skip: number, take: number) => {
     const start = process.hrtime();
   
     const data: CustomersSelectType[] = await db.select().from(customers).where(eq(customers.CustomerID, id));
-    const sqlQuery = db.select().from(customers).where(eq(customers.CustomerID, id)).toSQL();
+    const { sql: sqlQuery } = db.select().from(customers).where(eq(customers.CustomerID, id)).toSQL();
   
     const end = process.hrtime(start);
     const duration = `${(end[0] * 1000000000 + end[1]) / 1000000} ms`;
@@ -61,7 +61,7 @@ export const getAllCustomers = async (skip: number, take: number) => {
       .where(ilike(customers.ContactTitle, `%${query}%`))
       .limit(50);
 
-    const sqlQuery = db.select().from(customers)
+    const { sql: sqlQuery } = db.select().from(customers)
       .where(ilike(customers.CompanyName, `%${query}%`))
       .where(ilike(customers.ContactName, `%${query}%`))
       .where(ilike(customers.ContactTitle, `%${query}%`))

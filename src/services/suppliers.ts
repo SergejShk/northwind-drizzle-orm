@@ -10,7 +10,7 @@ export const getAllSuppliers = async (skip: number, take: number) => {
     const start = process.hrtime();
 
     const data: SuppliersSelectType[] = await db.select().from(suppliers).limit(take).offset(skip);
-    const sqlQuery = db.select().from(suppliers).limit(take).offset(skip).toSQL();
+    const { sql: sqlQuery } = db.select().from(suppliers).limit(take).offset(skip).toSQL();
 
     const total = await db.select({ count: sql<number>`count(*)` }).from(suppliers);
   
@@ -33,7 +33,7 @@ export const getSupplierById = async (id: string) => {
   const start = process.hrtime();
 
   const data: SuppliersSelectType[] = await db.select().from(suppliers).where(eq(suppliers.SupplierID, id));
-  const sqlQuery = db.select().from(suppliers).where(eq(suppliers.SupplierID, id)).toSQL();
+  const { sql: sqlQuery } = db.select().from(suppliers).where(eq(suppliers.SupplierID, id)).toSQL();
 
   const end = process.hrtime(start);
   const duration = `${(end[0] * 1000000000 + end[1]) / 1000000} ms`;
