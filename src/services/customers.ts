@@ -1,4 +1,4 @@
-import { sql, eq } from 'drizzle-orm'
+import { sql, eq, ilike } from 'drizzle-orm'
 
 import { db } from "../db/dbSource";
 import customers, { CustomersSelectType } from "../models/customers";
@@ -51,3 +51,45 @@ export const getAllCustomers = async (skip: number, take: number) => {
       };
   };
   
+  export const getCustomersBySearch = async (query: any) => {
+    const date = new Date().toISOString();
+    const start = process.hrtime();
+  
+    const dataCustomers: CustomersSelectType[] = await db.select().from(customers)
+      .where(ilike(customers.CompanyName, `%${query}%`))
+      .where(ilike(customers.ContactName, `%${query}%`))
+      .where(ilike(customers.ContactTitle, `%${query}%`))
+      .limit(50);
+
+    const sqlQuery = db.select().from(customers)
+      .where(ilike(customers.CompanyName, `%${query}%`))
+      .where(ilike(customers.ContactName, `%${query}%`))
+      .where(ilike(customers.ContactTitle, `%${query}%`))
+      .limit(50).toSQL();
+
+    const end = process.hrtime(start);
+    const duration = `${(end[0] * 1000000000 + end[1]) / 1000000} ms`;
+  
+    if (!dataCustomers || dataCustomers.length === 0) {
+      throw new NotFoundError("Not found");
+    }
+  
+    const data = dataCustomers.map((customer) => {
+      return {
+        CustomerID: customer.CustomerID,
+        CompanyName: customer.CompanyName,
+        ContactName: customer.ContactName,
+        ContactTitle: customer.ContactTitle,
+        Phone: customer.Phone,
+      };
+    });
+  
+    return {
+      metrics: {
+        resultCount: data.length,
+        type: ["selectWhere"],
+      },
+      stats: { date, duration, sql: sqlQuery },
+      data,
+    };
+  };
