@@ -1,4 +1,4 @@
-import { sql, eq } from 'drizzle-orm'
+import { sql, eq, ilike } from 'drizzle-orm'
 
 import { db } from "../db/dbSource";
 import products, { ProductsSelectType } from '../models/products';
@@ -72,3 +72,41 @@ export const getProductById = async (id: string) => {
     };
   };
   
+  export const getProductsBySearch = async (query: any) => {
+    const date = new Date().toISOString();
+    const start = process.hrtime();
+
+    const dataProducts: ProductsSelectType[] = await db.select().from(products)
+        .where(ilike(products.ProductName, `%${query}%`))
+        .limit(50);
+  
+    const { sql: sqlQuery } = db.select().from(products)
+        .where(ilike(products.ProductName, `%${query}%`))
+        .limit(50).toSQL();
+  
+    const end = process.hrtime(start);
+    const duration = `${(end[0] * 1000000000 + end[1]) / 1000000} ms`;
+  
+    if (!dataProducts || dataProducts.length === 0) {
+      throw new NotFoundError("Not found");
+    }
+  
+    const data = dataProducts.map((product) => {
+      return {
+        ProductID: product.ProductID,
+        ProductName: product.ProductName,
+        QuantityPerUnit: product.QuantityPerUnit,
+        UnitPrice: product.UnitPrice,
+        UnitsInStock: product.UnitsInStock,
+      };
+    });
+  
+    return {
+      metrics: {
+        resultCount: data.length,
+        type: ["selectWhere"],
+      },
+      stats: { date, duration, sql: sqlQuery },
+      data,
+    };
+  };

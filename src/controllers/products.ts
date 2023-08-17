@@ -1,7 +1,7 @@
 import { Request } from "express";
 
 import { Controller } from "./contrller";
-import { getAllProducts, getProductById } from "../services/products";
+import { getAllProducts, getProductById, getProductsBySearch } from "../services/products";
 
 import { asyncWrapper } from "../utils/errorHandlers";
 
@@ -11,6 +11,7 @@ class ProductsController extends Controller {
     this.router
       .get("/", asyncWrapper(this.getAll))
       .get("/:id", asyncWrapper(this.getById))
+      .get("/search/:query", asyncWrapper(this.getBySearch));
   }
 
   private getAll = async (req: Request, res: any) => {
@@ -29,6 +30,13 @@ class ProductsController extends Controller {
     const product = await getProductById(id);
 
     return res.status(200).json(product);
+  };
+
+  private getBySearch = async (req: Request, res: any) => {
+    const { query } = req.params;
+    const data = await getProductsBySearch(query);
+
+    res.status(200).json(data);
   };
 }
 
