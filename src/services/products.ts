@@ -47,7 +47,7 @@ export const getProductById = async (id: string) => {
     if (!data) {
       throw new NotFoundError("Not found");
     }
-  
+    
     const result = Object.entries(data || []).reduce((acc: any, [key, value]) => {
       if (data.suppliers && key === "SupplierID") {
         acc[key] = value;
@@ -68,7 +68,7 @@ export const getProductById = async (id: string) => {
         type: ["selectWithJoin"],
       },
       stats: { date, duration, sql: sqlQuery },
-      data: result,
+      data: result.products,
     };
   };
   
