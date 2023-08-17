@@ -1,7 +1,7 @@
 import { Request } from "express";
 
 import { Controller } from "./contrller";
-import { getAllSuppliers } from "../services/suppliers";
+import { getAllSuppliers, getSupplierById } from "../services/suppliers";
 import { asyncWrapper } from "../utils/errorHandlers";
 
 class SuppliersController extends Controller {
@@ -9,6 +9,7 @@ class SuppliersController extends Controller {
     super("suppliers");
     this.router
       .get("/", asyncWrapper(this.getAll))
+      .get("/:id", asyncWrapper(this.getById));
   }
 
   private getAll = async (req: Request, res: any) => {
@@ -20,6 +21,13 @@ class SuppliersController extends Controller {
     const data = await getAllSuppliers(skip, take);
 
     return res.status(200).json(data);
+  };
+
+  private getById = async (req: Request, res: any) => {
+    const id = req.params.id;
+    const supplier = await getSupplierById(id);
+
+    return res.status(200).json(supplier);
   };
 }
 
