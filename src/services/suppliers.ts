@@ -48,6 +48,6 @@ export const getSupplierById = async (id: string) => {
       type: ["selectWhere"],
     },
     stats: { date, duration, sql: sqlQuery },
-    data,
+    data: data[0],
   };
 };
