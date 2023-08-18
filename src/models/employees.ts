@@ -1,4 +1,5 @@
 import { pgTable, text } from "drizzle-orm/pg-core";
+import { InferModel } from "drizzle-orm";
 
 const employees = pgTable('employees', {
     EmployeeID: text('EmployeeID').primaryKey(),
@@ -18,5 +19,7 @@ const employees = pgTable('employees', {
     Notes: text('Notes'),
     ReportsTo: text('ReportsTo'),
 });
+
+export type EmployeesSelectType = InferModel<typeof employees, "select">;
 
 export default employees

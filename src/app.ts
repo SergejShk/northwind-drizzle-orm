@@ -5,6 +5,7 @@ import cors from "cors";
 import suppliers from "./controllers/suppliers";
 import customers from "./controllers/customers";
 import products from "./controllers/products";
+import employees from "./controllers/employees";
 
 import { errorHandler } from "./utils/errorHandlers";
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(suppliers.path, suppliers.router);
 app.use(customers.path, customers.router);
 app.use(products.path, products.router);
+app.use(employees.path, employees.router);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Not Found" });
