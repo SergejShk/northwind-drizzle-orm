@@ -51,7 +51,7 @@ export const getPreparedDataOrder = (data: any) => {
       CustomerID: order?.orders?.CustomerID,
       EmployeeID: order?.orders?.EmployeeID,
       ShipName: order?.orders?.ShipName,
-      TotalProducts: String(order?.products.length),
+      Products: String(order?.products.length),
       TotalQuantity: orderDetails
         ? sum("Quantity", orderDetails)
         : "",
@@ -82,7 +82,7 @@ export const getPreparedAllOrders = (data: any) => {
     return {
       OrderID: order.orders.OrderID,
       TotalPrice: order?.orderDetails ? sumTotalPrice(order?.orderDetails) : "",
-      TotalProducts: String(order?.orderDetails.length),
+      Products: String(order?.orderDetails.length),
       Quantity: order?.orderDetails ? sum("Quantity", order?.orderDetails) : "",
       OrderDate: order.orders.OrderDate,
       ShipName: order.orders.ShipName,
