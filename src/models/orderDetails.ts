@@ -1,5 +1,5 @@
 import { pgTable, serial, text } from "drizzle-orm/pg-core";
-import { relations } from 'drizzle-orm';
+import { relations, InferModel } from 'drizzle-orm';
 
 import products from "./products";
 import orders from "./orders";
@@ -23,5 +23,7 @@ export const ordersRelations = relations(orderDetails, ({ one }) => ({
 		references: [products.ProductID],
 	}),
 }));
+
+export type OrderDetailsType = InferModel<typeof orderDetails>;
 
 export default orderDetails
