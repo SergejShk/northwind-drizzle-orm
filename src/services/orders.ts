@@ -15,10 +15,12 @@ export const getAllOrders = async (skip: number, take: number) => {
 
     const data = await db.select().from(orders)
         .leftJoin(orderDetails, eq(orders.OrderID, orderDetails.OrderID))
+        .leftJoin(products, eq(orderDetails.OrderID, products.ProductID))
         .limit(take).offset(skip);
 
     const { sql: sqlQuery } = db.select().from(orders)
         .leftJoin(orderDetails, eq(orders.OrderID, orderDetails.OrderID))
+        .leftJoin(products, eq(orderDetails.OrderID, products.ProductID))
         .limit(take).offset(skip).toSQL();
 
     const total = await db.select({ count: sql<number>`count(*)` }).from(orders);
