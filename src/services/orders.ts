@@ -7,7 +7,6 @@ import products, { ProductsType } from '../models/products';
 import shippers, { ShippersType } from '../models/shippers';
 
 import { getPreparedAllOrders, getPreparedDataOrder } from "../utils/prepareDataOrders";
-// import { getPreparedAllOrders } from "../utils/prepareDataOrders";
 import { NotFoundError } from '../utils/errors';
 
 export const getAllOrders = async (skip: number, take: number) => {
@@ -16,7 +15,6 @@ export const getAllOrders = async (skip: number, take: number) => {
 
     const data = await db.select().from(orders)
         .leftJoin(orderDetails, eq(orders.OrderID, orderDetails.OrderID))
-        .leftJoin(products, eq(orders.OrderID, orderDetails.OrderID))
         .limit(take).offset(skip);
 
     const { sql: sqlQuery } = db.select().from(orders)
@@ -111,7 +109,7 @@ export const getOrderById = async (id: string) => {
   );
 
   const preparedData = getPreparedDataOrder(Object.values(result));
-
+    
   return {
     metrics: {
       resultCount: 1,
