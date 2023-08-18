@@ -27,45 +27,51 @@ const sumTotalDiscount = (data: any[]) => {
 const preparedOrderProducts = (data: {}[]) => {
   return data.map((product: any) => {
     return {
-      orderDetailsID: product.orderDetailsId,
+      orderDetailsID: product.ID,
       OrderID: product.OrderID,
       ProductID: product.ProductID,
       UnitPrice: product.UnitPrice,
       Quantity: product.Quantity,
       Discount: product.Discount,
-      ProductName: product.Product.ProductName,
+      ProductName: product.ProductName,
     };
   });
 };
 
 export const getPreparedDataOrder = (data: any) => {
+  const [order] = data;
+  const orderDetails = order.orderDetails.map((orderDetail: any, idx: number) => ({
+    ...orderDetail,
+    ProductName: order?.products[idx].ProductName,
+  }))
+
   return {
     data: {
-      OrderID: data?.OrderID,
-      CustomerID: data?.CustomerID,
-      EmployeeID: data?.EmployeeID,
-      ShipName: data?.ShipName,
-      TotalProducts: String(data?.orderDetails.length),
-      TotalQuantity: data?.orderDetails
-        ? sum("Quantity", data?.orderDetails)
+      OrderID: order?.orders?.OrderID,
+      CustomerID: order?.orders?.CustomerID,
+      EmployeeID: order?.orders?.EmployeeID,
+      ShipName: order?.orders?.ShipName,
+      TotalProducts: String(order?.products.length),
+      TotalQuantity: orderDetails
+        ? sum("Quantity", orderDetails)
         : "",
-      TotalPrice: data?.orderDetails ? sumTotalPrice(data?.orderDetails) : "",
-      TotalDiscount: data?.orderDetails
-        ? sumTotalDiscount(data?.orderDetails)
+      TotalPrice: orderDetails ? sumTotalPrice(order?.orderDetails) : "",
+      TotalDiscount: orderDetails
+        ? sumTotalDiscount(orderDetails)
         : "$0.00",
-      ShipVia: data?.shippers.CompanyName,
-      Freight: "$" + data?.Freight,
-      OrderDate: data?.OrderDate.split(" ")[0],
-      RequiredDate: data?.RequiredDate.split(" ")[0],
-      ShippedDate: data?.ShippedDate.split(" ")[0],
-      ShipCity: data?.ShipCity,
+      ShipVia: order?.shippers.CompanyName,
+      Freight: "$" + order?.orders?.Freight,
+      OrderDate: order?.orders?.OrderDate.split(" ")[0],
+      RequiredDate: order?.orders?.RequiredDate.split(" ")[0],
+      ShippedDate: order?.orders?.ShippedDate.split(" ")[0],
+      ShipCity: order?.orders?.ShipCity,
       ShipRegion: "",
-      ShipPostalCode: data?.ShipPostalCode,
-      ShipCountry: data?.ShipCountry,
+      ShipPostalCode: order?.orders?.ShipPostalCode,
+      ShipCountry: order?.orders?.ShipCountry,
     },
 
-    orderProducts: data?.orderDetails
-      ? preparedOrderProducts(data.orderDetails)
+    orderProducts: orderDetails
+      ? preparedOrderProducts(orderDetails)
       : [],
   };
 };

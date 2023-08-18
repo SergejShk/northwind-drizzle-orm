@@ -21,5 +21,6 @@ export const categoriesRelations = relations(products, ({ many }) => ({
 }));
 
 export type ProductsSelectType = InferModel<typeof products, "select">;
+export type ProductsType = InferModel<typeof products>;
 
 export default products

@@ -3,9 +3,11 @@ import { sql, eq } from 'drizzle-orm'
 import { db } from "../db/dbSource";
 import orders, { OrdersType } from "../models/orders";
 import orderDetails, { OrderDetailsType } from '../models/orderDetails';
+import products, { ProductsType } from '../models/products';
+import shippers, { ShippersType } from '../models/shippers';
 
-// import { getPreparedAllOrders, getPreparedDataOrder } from "../utils/prepareDataOrders";
-import { getPreparedAllOrders } from "../utils/prepareDataOrders";
+import { getPreparedAllOrders, getPreparedDataOrder } from "../utils/prepareDataOrders";
+// import { getPreparedAllOrders } from "../utils/prepareDataOrders";
 import { NotFoundError } from '../utils/errors';
 
 export const getAllOrders = async (skip: number, take: number) => {
@@ -14,6 +16,7 @@ export const getAllOrders = async (skip: number, take: number) => {
 
     const data = await db.select().from(orders)
         .leftJoin(orderDetails, eq(orders.OrderID, orderDetails.OrderID))
+        .leftJoin(products, eq(orders.OrderID, orderDetails.OrderID))
         .limit(take).offset(skip);
 
     const { sql: sqlQuery } = db.select().from(orders)
@@ -62,10 +65,14 @@ export const getOrderById = async (id: string) => {
 
   const data = await db.select().from(orders)
     .leftJoin(orderDetails, eq(orders.OrderID, orderDetails.OrderID))
-    .where(eq(orders.OrderID, id));
+    .leftJoin(products, eq(orderDetails.ProductID, products.ProductID))
+    .leftJoin(shippers, eq(orders.ShipVia, shippers.ShipperID))
+    .where(eq(orders.OrderID, id))
 
   const { sql: sqlQuery } = db.select().from(orders)
     .leftJoin(orderDetails, eq(orders.OrderID, orderDetails.OrderID))
+    .leftJoin(products, eq(orderDetails.ProductID, products.ProductID))
+    .leftJoin(shippers, eq(orders.ShipVia, shippers.ShipperID))
     .where(eq(orders.OrderID, id)).toSQL();
 
   const end = process.hrtime(start);
@@ -75,7 +82,35 @@ export const getOrderById = async (id: string) => {
     throw new NotFoundError("Order not found");
   }
 
-//   const preparedData = getPreparedDataOrder(data);
+  const result = data.reduce<Record<number, { orders: OrdersType; orderDetails: OrderDetailsType[], shippers: ShippersType[], products: ProductsType[] }>>(
+    (acc, row) => {
+      const orders = row.orders;
+      const orderDetail = row.order_details;
+      const shippers = row.shippers;
+      const products = row.products;
+   
+      if (!acc[Number(orders.OrderID)]) {
+        acc[Number(orders.OrderID)] = { orders, orderDetails: [], shippers: [], products: [] };
+      }
+   
+      if (orderDetail) {
+        acc[Number(orders.OrderID)].orderDetails.push(orderDetail);
+      }
+      
+      if (shippers) {
+        acc[Number(orders.OrderID)].shippers.push(shippers);
+      }
+
+      if (products) {
+        acc[Number(orders.OrderID)].products.push(products);
+      }
+   
+      return acc;
+    },
+    {}
+  );
+
+  const preparedData = getPreparedDataOrder(Object.values(result));
 
   return {
     metrics: {
@@ -83,6 +118,6 @@ export const getOrderById = async (id: string) => {
       type: ["selectWhere"],
     },
     stats: { date, duration, sql: sqlQuery },
-    data: data,
+    data: preparedData,
   };
 };
