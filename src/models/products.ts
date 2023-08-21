@@ -12,6 +12,7 @@ const products = pgTable('products', {
     QuantityPerUnit: text('QuantityPerUnit'),
     UnitPrice: text('UnitPrice'),
     UnitsInStock: text('UnitsInStock'),
+    UnitsOnOrder: text('UnitsOnOrder'),
     ReorderLevel: text('ReorderLevel'),
     Discontinued: text('Discontinued'),
 });

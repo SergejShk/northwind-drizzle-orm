@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS "products" (
 	"QuantityPerUnit" text,
 	"UnitPrice" text,
 	"UnitsInStock" text,
+	"UnitsOnOrder" text,
 	"ReorderLevel" text,
 	"Discontinued" text
 );

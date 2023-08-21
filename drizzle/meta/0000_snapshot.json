@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "1175318c-9e52-467f-b794-505181df7431",
+  "id": "a4da09a9-bf7d-4619-982e-f074c62ea8d9",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "categories": {
@@ -505,6 +505,12 @@
         },
         "UnitsInStock": {
           "name": "UnitsInStock",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UnitsOnOrder": {
+          "name": "UnitsOnOrder",
           "type": "text",
           "primaryKey": false,
           "notNull": false
